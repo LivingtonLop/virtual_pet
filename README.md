@@ -44,3 +44,4 @@ env/bin/activate
 
 pip install -r requirements.txt (ubicate en config)
 
+python src/main.py
