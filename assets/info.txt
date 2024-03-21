@@ -1,0 +1,15 @@
+A -> Reposo (4)
+B -> Animacion Comer (4)
+C -> Animacion Domir (4)
+D -> Animacion Banar (4)
+E -> Animacion Jugar (4)
+F -> Animacion Morir (4)
+
+Fondos de los escenario (5)
+Bienvenida (casa)
+Bano (Tina)
+Dormir (Cama)
+Comer (Sala)
+Jugar (Parque)
+Morir (RIP)
+
