@@ -56,11 +56,3 @@ class Helpers ():
         button_init = pygame.transform.scale(button_init, (self.resized_button_width, self.resized_button_height))
         return button_init
     
-    def draw_button(self, screen : pygame.display , button_image : pygame.image, x: int, y:int, action_button, msg : str ):
-        button_rect = button_image.get_rect(topleft=(x, y))
-        screen.blit(button_image, button_rect)
-        
-        mouse_pressed = pygame.mouse.get_pressed()
-
-        if button_rect.collidepoint(pygame.mouse.get_pos()) and mouse_pressed[0]:
-            action_button(msg)
