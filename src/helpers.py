@@ -1,7 +1,7 @@
 import pygame
 
 class Helpers ():
-    def __init__(self,screen_width:int,screen_height:int,resized_button_width : int, resized_button_height : int, resized_sprite_width:int,resized_sprite_height:int, number_row_sprite_sheet :int, number_column_sprite_sheet:int, list_label_sprite : list):
+    def __init__(self, list_label_sprite : list, number_row_sprite_sheet :int, number_column_sprite_sheet:int, screen_width=400,screen_height=400,resized_button_width = 70, resized_button_height = 70, resized_sprite_width=100,resized_sprite_height=100):
 
         self.screen_width = screen_width
         self.screen_height = screen_height
