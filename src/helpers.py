@@ -1,5 +1,6 @@
 import pygame
-
+import json
+import os
 class Helpers ():
     def __init__(self, list_label_sprite : list, number_row_sprite_sheet :int, number_column_sprite_sheet:int, screen_width=400,screen_height=400,resized_button_width = 70, resized_button_height = 70, resized_sprite_width=100,resized_sprite_height=100):
 
@@ -55,4 +56,26 @@ class Helpers ():
         button_init = pygame.image.load(f"assets/images/buttons/{button_image}.png")
         button_init = pygame.transform.scale(button_init, (self.resized_button_width, self.resized_button_height))
         return button_init
-    
+        
+    def saved_entitys(self)->dict:
+        file = "data/pets/pets.json"
+        
+        if os.path.exists(file):
+            with open(file, "r") as file_json:
+                pets = json.load(file_json)
+
+        return pets
+
+    def save_entitys(self, name_pet:str, number_sleep:int, number_eat:int, number_play:int, number_clear:int):
+        pet = {"pet_name": name_pet, "sleep":number_sleep , "play":number_play , "eat": number_eat,"clear":number_clear}
+        file = "data/pets/pets.json"
+        pets = {}
+        
+        if os.path.exists(file):
+            with open(file, "r") as file_json:
+                pets = json.load(file_json)
+
+        pets.update(pet)
+
+        with open(file, "w") as archivo_json:
+            json.dump(pets, archivo_json, indent=4)

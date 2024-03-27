@@ -19,3 +19,11 @@ class ScreenManager(Helpers):
     def blit_elements(self, elements:list): #img
         for element in elements:
             element.blit(self.screen)
+
+    def handle_elements(self, elements:list, event):
+        for element in elements:
+            element.handle_event(event)
+
+    def update_elements(self, elements:list):
+        for element in elements:
+            element.update(self.screen)
