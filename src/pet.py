@@ -2,6 +2,7 @@ import pygame
 
 from screen_manager import ScreenManager
 from buttons import Button
+from life import Life
 class Pet(ScreenManager):
     def __init__(self, screen_width :int, screen_height:int):
         list_label_sprite = ["normal","sleep","eat","play","bath","dead"]
@@ -9,7 +10,7 @@ class Pet(ScreenManager):
         super().__init__(screen_width=screen_width, screen_height=screen_height, list_label_sprite=list_label_sprite, number_row_sprite_sheet=6, number_column_sprite_sheet=4)
         #load buttons
         self.init_game = True
-        
+        self.life = Life(self.saved_entitys())
         self.list_background = {
             "sleep" : "sleep_virtual_pet128x128",
             "eat" : "eat_virtual_pet128x128",
@@ -42,14 +43,17 @@ class Pet(ScreenManager):
         filename = self.list_background.get(action)
         self.sprite_a = self.sprite_all[action]
         self.background = self.load_background(background=filename)
-        print(action)
+        if action != "normal": self.life.rest_status(status= action)
 
     def welcome_init(self)-> dict:
         sprite_position = (150, 230)
         current_sprite_index = 0
-        animation_speed = 200
+        animation_speed = 300
 
         while self.init_game:
+
+            self.life.plus_status()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.init_game = False
@@ -57,19 +61,19 @@ class Pet(ScreenManager):
                     #load btns
                     self.handle_elements(elements=self.list_buttons_to_draw,event=event)
 
-                self.screen.blit(self.background, (0, 0))
-                self.update_elements(elements=self.list_buttons_to_draw)
+            self.screen.blit(self.background, (0, 0))
                 
-                current_sprite = self.sprite_a[current_sprite_index]
-                self.screen.blit(current_sprite, sprite_position)
+            current_sprite = self.sprite_a[current_sprite_index]
+            self.screen.blit(current_sprite, sprite_position)
+                
+            self.update_elements(elements=self.list_buttons_to_draw)
+            pygame.time.wait(animation_speed)
 
-                pygame.display.flip()
-
-                pygame.time.wait(animation_speed)
-
-                current_sprite_index = (current_sprite_index + 1) % len(self.sprite_a)
-
-                self.clock.tick(60)
+            current_sprite_index = (current_sprite_index + 1) % len(self.sprite_a)
+        
+            self.update_screen()
+            self.clock.tick(60)
+            self.screen.fill((0,0,0))
 
         return self.init_game
 

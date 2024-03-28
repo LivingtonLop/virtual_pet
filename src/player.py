@@ -65,14 +65,16 @@ class Player(ScreenManager):
             self.update_screen()
             self.clock.tick(60)
             self.screen.fill((0,0,0))
-        return self.list_pets
+
+        return self.saved_entitys()
 
     def finish_welcome(self):
         self.init_game = False
+        self.list_pets = self.saved_entitys()
 
     def get_name_pet(self): #draw
         name_pet = input()
-        self.save_entitys(name_pet=name_pet,number_sleep=0, number_eat=0, number_play=0, number_clear=0)
+        self.save_entitys(name_pet=name_pet,number_sleep=0, number_eat=0, number_play=0, number_bath=0)
         self.finish_welcome()
 
     
