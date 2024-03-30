@@ -10,7 +10,7 @@ class Pet(ScreenManager):
         super().__init__(screen_width=screen_width, screen_height=screen_height, list_label_sprite=list_label_sprite, number_row_sprite_sheet=6, number_column_sprite_sheet=4)
         #load buttons
         self.init_game = True
-        self.life = Life(self.saved_entitys())
+        self.life = Life(self.saved_entitys(), screen=self.screen)
         self.list_background = {
             "sleep" : "sleep_virtual_pet128x128",
             "eat" : "eat_virtual_pet128x128",
@@ -51,22 +51,21 @@ class Pet(ScreenManager):
         animation_speed = 300
 
         while self.init_game:
-
-            self.life.plus_status()
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.init_game = False
                 else:
-                    #load btns
                     self.handle_elements(elements=self.list_buttons_to_draw,event=event)
-
-            self.screen.blit(self.background, (0, 0))
                 
+            self.screen.blit(self.background, (0, 0))
+            
             current_sprite = self.sprite_a[current_sprite_index]
             self.screen.blit(current_sprite, sprite_position)
                 
             self.update_elements(elements=self.list_buttons_to_draw)
+            
+            self.life.plus_status()
+            
             pygame.time.wait(animation_speed)
 
             current_sprite_index = (current_sprite_index + 1) % len(self.sprite_a)
