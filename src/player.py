@@ -41,14 +41,16 @@ class Player(ScreenManager):
             self.screen.blit(texture_surface,(100,200))
             self.update_screen()
             self.screen.fill((0,0,0))
-
+        quit_screen = False
         while self.init_game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.init_game = False
+                    quit_screen = True
                 else:
                     self.button_new_pet.handle_event(event=event)
                     if type(self.list_pets) is dict:self.button_continue_pet.handle_event(event=event)
+                if not self.handle_event_input(event=event):self.finish_welcome()
 
             self.screen.blit(background_init, (0,0))
             
@@ -61,20 +63,21 @@ class Player(ScreenManager):
             pygame.time.wait(200)
 
             current_sprite_index = (current_sprite_index + 1) % len(sprite_init)
-
+            self.draw_label(text="New Pet",x=100,y=180)
+            self.draw_input(rect=self.rect)
             self.update_screen()
             self.clock.tick(60)
             self.screen.fill((0,0,0))
 
-        return self.saved_entitys()
+        return self.saved_entitys() if not quit_screen else []
 
     def finish_welcome(self):
+        self.save_entitys(name_pet=self.text,number_sleep=0, number_eat=0, number_play=0, number_bath=0)
+        self.text = ""
         self.init_game = False
         self.list_pets = self.saved_entitys()
 
     def get_name_pet(self): #draw
-        name_pet = input()
-        self.save_entitys(name_pet=name_pet,number_sleep=0, number_eat=0, number_play=0, number_bath=0)
-        self.finish_welcome()
-
+        self.active = True
+        self.visible = True 
     

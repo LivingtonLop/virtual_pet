@@ -8,7 +8,7 @@ class Life(Helpers):
     def __init__(self, pet : dict, screen):
         super().__init__(list_label_sprite=[],number_column_sprite_sheet=0, number_row_sprite_sheet=0)
         self.pet = pet
-        self.limit = 100
+        self.limit = 1000
 
         self.font = pygame.font.Font(None, 20)
         self.messages = {
@@ -41,13 +41,14 @@ class Life(Helpers):
         print(f"{status}: {self.pet[status]}")
 
         self.pet[status] = 0
+        self.messages[status][1] = 0
+        self.y_text_on_screen = self.screen.get_height() - 50
 
         self.save_entitys(name_pet=self.pet["pet_name"], number_sleep=self.pet["sleep"], number_eat=self.pet["eat"], number_play=self.pet["play"], number_bath=self.pet["bath"])
 
     def display_message_of_status(self, status:str, y:int):
 
         if self.messages[status][1] == 0:
-            self.messages[status][1] = y
 
             text_surface = self.font.render(self.messages[status][0], True, (0, 0, 0))
             text_rect = text_surface.get_rect(bottomright=(self.screen.get_width() - 10, y))
@@ -55,7 +56,7 @@ class Life(Helpers):
             self.screen.blit(text_surface, text_rect)
         
             self.y_text_on_screen -= text_rect.height + 5
-
+            self.messages[status][1] = self.y_text_on_screen
         else:
             text_surface = self.font.render(self.messages[status][0], True, (0, 0, 0))
             text_rect = text_surface.get_rect(bottomright=(self.screen.get_width() - 10, self.messages[status][1]))
